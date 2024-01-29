@@ -65,7 +65,7 @@ const NewsApp = () => {
                 <span className="text-base mr-2 font-semibold cursor-pointer hover:text-gray-700 international" onClick={() => setQuery("international")}>International /</span>
                 <span className="text-base mr-2 font-semibold cursor-pointer hover:text-gray-700 science" onClick={() => setQuery("science")}>Science /</span>
                 <span className="text-base mr-2 font-semibold cursor-pointer hover:text-gray-700 technology" onClick={() => setQuery("technology")}>Technology /</span>
-                <span className="text-base mr-2 font-semibold cursor-pointer hover:text-gray-700 agriculture" onClick={() => setQuery("agriculturej")}>Agriculture /</span>
+                <span className="text-base mr-2 font-semibold cursor-pointer hover:text-gray-700 agriculture" onClick={() => setQuery("agriculture")}>Agriculture /</span>
                 <span className="gadgets font-semibold cursor-pointer hover:text-gray-700 text-base" onClick={() => setQuery("gadgets")}>Gadgets</span>
             </div>
 
@@ -78,18 +78,20 @@ const NewsApp = () => {
                     <div className="sm:px-80 px-5 my-3">
                         <div className="row flex justify-center">
                             {news.map((val, index) => (
-                                <div className="relative pb-1 bg-gray-100 rounded-md border mx-3 my-3" style={{ width: "18rem" }} key={index}>
-                                    <div className="image-container pb-3" style={{ height: "180px", overflow: "hidden" }}>
+                                <div className="relative pb-1 bg-gray-100 rounded-md border mx-2 my-3" style={{ width: "18rem" }} key={index}>
+                                    <div className="image-container" style={{ height: "180px", overflow: "hidden" }}>
                                         {/* Conditionally render image or placeholder div */}
-                                        {val.urlToImage ? (
+                                        {val.urlToImage && (
                                             <img
                                                 src={val.urlToImage}
-                                                className={`card-img-top pt-2 pb-3 ${isLoading ? 'hidden' : ''}`}
-                                                alt=""
+                                                className={`card-img-top pt-2 pb-3 ${isLoading ? '' : ''}`}
+                                                alt={val.title}
                                                 onLoad={() => setIsLoading(false)} // Set loading to false when the image is loaded
+                                                onError={() => setIsLoading(false)} // Set loading to false when the image fails to load
                                             />
-                                        ) : (
-                                            <div className={`image pb-3 pt-2 bg-black w-full h-full ${isLoading ? '' : 'hidden'}`}></div>
+                                        )}
+                                        {!val.urlToImage && (
+                                            <div className={`image bg-gray-400 w-full h-full ${isLoading ? '' : ''}`}></div>
                                         )}
                                     </div>
                                     <div className="card-body pt-3">
