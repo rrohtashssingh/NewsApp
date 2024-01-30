@@ -13,8 +13,7 @@ const NewsApp = () => {
         if (query.trim() === '') {
             axios.get(`https://newsapi.org/v2/everything?q=uttarpradesh&apiKey=073988eab35344e3a3ca94fdf88134bb`)
                 .then((res) => {
-                    console.log(res);
-                    setNews(res.data.articles);
+                    setNews(res.data.articles.filter(article => !!article.urlToImage)); // Filter out articles without images
                     setIsLoading(false);
                 })
                 .catch((error) => {
@@ -24,7 +23,7 @@ const NewsApp = () => {
         } else {
             axios.get(`https://newsapi.org/v2/everything?q=${query}&apiKey=073988eab35344e3a3ca94fdf88134bb`)
                 .then((res) => {
-                    setNews(res.data.articles);
+                    setNews(res.data.articles.filter(article => !!article.urlToImage)); // Filter out articles without images
                     setIsLoading(false);
                 })
                 .catch((error) => {
@@ -91,7 +90,7 @@ const NewsApp = () => {
                                             />
                                         )}
                                         {!val.urlToImage && (
-                                            <div className={`image bg-gray-400 w-full h-full ${isLoading ? '' : ''}`}></div>
+                                            <div className={`image bg-gray-400 w-full h-full ${isLoading ? 'hidden' : ''}`}></div>
                                         )}
                                     </div>
                                     <div className="card-body pt-3">
